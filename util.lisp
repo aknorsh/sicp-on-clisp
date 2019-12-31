@@ -9,6 +9,15 @@
      (progn ,@body)))
 
 ;#################################
+; Problem utils
+;#################################
+
+(defun test (actual expected)
+  (if (eq actual expected)
+      (print 'ok)
+      (print 'wrong)))
+
+;#################################
 ; Scheme -> Common Lisp macro
 ;#################################
 
@@ -16,3 +25,4 @@
   (if (listp (car body))
       `(defun ,(caar body) ,(cdar body) ,@(cdr body))
       `(defparameter ,@body)))
+
