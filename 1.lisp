@@ -114,3 +114,31 @@
   ; !(and)(or): SPECIAL case (not procedural)
   )
 
+;1.1.7 例：ニュートン法による平方根
+
+(section my-sqrt-with-newton
+  (define (average a b)
+    (/ (+ a b) 2))
+
+  (define (improve guess x)
+    (average guess (/ x guess)))
+
+  (define (square x)
+    (* x x))
+
+  (define (good-enough? guess x)
+    (< (abs (- (square guess) x)) 0.001))
+
+  (define (sqrt-iter guess x)
+    (if (good-enough? guess x)
+        guess
+        (sqrt-iter (improve guess x) x)))
+
+  (define (my-sqrt x)
+    (sqrt-iter 1.0 x))
+
+  (my-sqrt 9)
+  (my-sqrt (+ 100 37))
+  (my-sqrt (+ (my-sqrt 2) (my-sqrt 3)))
+  (square (my-sqrt 1000)))
+
