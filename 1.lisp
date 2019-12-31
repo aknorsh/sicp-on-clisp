@@ -1,4 +1,9 @@
 (load "./util.lisp")
+
+; ################################################
+; 1.1 プログラミングの要素
+; ################################################
+
 ;1.1.1 式
 
 ; combination = (operator ...operand)
@@ -142,3 +147,49 @@
   (my-sqrt (+ (my-sqrt 2) (my-sqrt 3)))
   (square (my-sqrt 1000)))
 
+;1.1.8 ブラックボックス抽象化としての手続き
+
+;Procedual Abstraction:
+; When you call square, you don't have to care about how it's implemented.
+; (that is, functions must be BLACK BOXed.)
+
+; Naming of Dummy args should be arbitral
+; -> Bound Variable (束縛変数):
+;     They are bound in Scope.
+;<-> Free variables: not bound. <, -, abs, square,,,
+;     Procedure depends on how they work. 
+
+; How to separate them?
+; -> Local & inner definition using Block structure.
+
+(section block-and-lexical-scoping
+  (define (my-sqrt x)
+  ; Just Block it
+    (define (good-enough? guess x)
+      (< (abs (- (square guess) x)) 0.001))
+    (define (improve guess x) (average guess (/ x guess)))
+    (define (sqrt-iter guess x)
+      (if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x) x)))
+    (sqrt-iter 1.0 x))
+
+  (define (my-sqrt x)
+  ; Use Lexical Scoping
+    (define (good-enough? guess)
+      (< (abs (- (square guess) x)) 0.001))
+    (define (improve guess)
+      (average guess (/ x guess)))
+    (define (sqrt-iter guess)
+      (if (good-enough? guess)
+          guess
+          (sqrt-iter (improve guess))))
+    (sqrt-iter 1.0))
+  ; In fact, it is not Localized. something goes wrong, maybe.
+  (my-sqrt 10))
+
+; ################################################
+; 1.2 手続きとそれが生成するプロセス
+; ################################################
+
+;1.2.1 
