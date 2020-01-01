@@ -144,4 +144,64 @@
   (test (my-cubic-root 125) 5.0)
   (test (my-cubic-root (* 125 64 27 8)) 120.0))
 
+(section p1-9
+  (print 1.9)
+
+  (define (+ a b)
+    (if (= a 0) b (inc (+ (dec a) b))))
+
+  ;(+ 4 5)
+  ;(inc (+ 3 5))
+  ;(inc (inc (+ 2 5)))
+  ;(inc (inc (inc (+ 1 5))))
+  ;(inc (inc (inc (inc (+ 0 5)))))
+  ;(inc (inc (inc (inc 5))))
+  ;(inc (inc (inc 6)))
+  ;(inc (inc 7))
+  ;(inc 8)
+  ;9
+  ; Recursive Process
+
+
+  (define (+ a b)
+    (if (= a 0) b (+ (dec a) (inc b))))
+
+  ;(+ 4 5)
+  ;(+ 3 6)
+  ;(+ 2 7)
+  ;(+ 1 8)
+  ;(+ 0 9)
+  ;9
+  ; Iterative Process
+)
+
+(section p1-10
+  (print 1.10)
+
+  (define (A x y)
+    (cond ((= y 0) 0)
+          ((= x 0) (* 2 y))
+          ((= y 1) 2)
+          (t (A (- x 1) (A x (- y 1))))))
+
+  (define (f n) (A 0 n))
+  ; -> 2y
+
+  (define (g n) (A 1 n))
+  ;(cond ((= n 0) 0)
+  ;      ((= n 1) 2)
+  ;      ((t (* 2 (g (- n 1))))))
+  ;(g n) -> (* 2 (g n-1)) -> (* 2 (* 2 (g n-2))) -> (* 2 2 2 ... (g 1))
+  ; -> if n==0: 0
+  ; -> else: 2^n
+
+  (define (h n) (A 2 n))
+  ;(cond ((= n 0) 0)
+  ;      ((= n 1) 2)
+  ;      (t (g (h (- n 1)))))
+  ;(h n) -> 2^(h n-1) -> 2^2^(h n-2) -> .. -> 2^2^...^2^(h 1) -> 2^2^2^...^2^2
+  ; -> if n==0; 0
+  ; -> else: 2^2^...^2
+)
+
 nil
