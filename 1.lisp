@@ -192,4 +192,33 @@
 ; 1.2 手続きとそれが生成するプロセス
 ; ################################################
 
-;1.2.1 
+;1.2.1 線形再帰と反復
+
+; n! = n*(n-1)*(n-2)*...*3*2*1
+
+; Recursive Process (再帰プロセス):
+; described as "Deferred Operation (遅延演算) -> 縮約"
+
+; Linear Recursive Process
+(define (factorial n)
+  ; n! = n * (n-1)!
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1)))))
+
+; Iterative Process (反復プロセス):
+; described as rules of State Variable (状態変数)
+
+; Linear Iterative Process
+(define (fact-iter product cnt max-cnt)
+  (if (> cnt max-cnt)
+      product
+      (fact-iter (* cnt product)
+                 (+ cnt 1)
+                 max-cnt)))
+
+(define (factorial2 n)
+  (fact-iter 1 1 n))
+
+; Lisp can do Iterative Process with recursive procedure.
+; -> Tail-Recursive (末尾再帰)
