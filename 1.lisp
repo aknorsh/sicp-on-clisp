@@ -222,3 +222,40 @@
 
 ; Lisp can do Iterative Process with recursive procedure.
 ; -> Tail-Recursive (末尾再帰)
+
+;1.2.2 木の再帰
+
+(section tree-recursion
+  ; it takes exponentialy many steps
+  (define (bad-fib n)
+    (cond ((= n 0) 0)
+          ((= n 1) 1)
+          (t (+ (fib (- n 1))
+                (fib (- n 2))))))
+
+  ; it takes linear steps
+  (define (good-fib n)
+    (fib-iter 1 0 n))
+  (define (fib-iter a b cnt)
+    (if (= cnt 0)
+        b
+        (fib-iter (+ a b) a (- cnt 1))))
+
+  ; smart coin-exchange function
+  (define (first-denomination kinds-of-coins)
+    (cond ((= kinds-of-coins 1) 1)
+          ((= kinds-of-coins 2) 5)
+          ((= kinds-of-coins 3) 10)
+          ((= kinds-of-coins 4) 25)
+          ((= kinds-of-coins 5) 50)))
+  (define (cc amount kinds-of-coins)
+    (cond ((= amount 0) 1)
+          ((or (< amount 0) (= kinds-of-coins 0)) 0)
+          (t (+ (cc amount
+                    (- kinds-of-coins 1))
+                (cc (- amount (first-denomination kinds-of-coins))
+                    kinds-of-coins)))))
+  (define (count-change amount) (cc amount 5))
+
+  (count-change 100))
+
